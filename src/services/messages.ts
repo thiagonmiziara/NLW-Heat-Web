@@ -14,3 +14,9 @@ export const getMessagesList = async () => {
 
   return response;
 };
+
+export const postMessage = async (message: string) => {
+  const response = (await api.post("messages", { message })).data;
+
+  return response;
+};

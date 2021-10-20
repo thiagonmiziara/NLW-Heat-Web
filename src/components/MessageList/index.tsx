@@ -1,9 +1,10 @@
-import styles from "./styles.module.scss";
-
-import logoImg from "../../assets/logo.svg";
 import { useEffect, useState } from "react";
+import io, { Socket } from "socket.io-client";
 
 import { getMessagesList } from "../../services/messages";
+
+import logoImg from "../../assets/logo.svg";
+import styles from "./styles.module.scss";
 
 type MessageProps = {
   id: string;
@@ -13,6 +14,14 @@ type MessageProps = {
     avatar_url: string;
   };
 };
+
+const messagesQueue: MessageProps[] = [];
+
+const socket = io("http://localhost:4000");
+
+socket.on("new_message", (newMessage: MessageProps) => {
+  messagesQueue.push(newMessage);
+});
 
 export function MessageList() {
   const [messages, setMessages] = useState<MessageProps[]>([]);
@@ -28,6 +37,18 @@ export function MessageList() {
 
   useEffect(() => {
     listMessages();
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (messagesQueue.length > 0) {
+        setMessages((oldValue) =>
+          [messagesQueue[0], oldValue[0], oldValue[1]].filter(Boolean)
+        );
+
+        messagesQueue.shift();
+      }
+    }, 3000);
   }, []);
 
   return (
