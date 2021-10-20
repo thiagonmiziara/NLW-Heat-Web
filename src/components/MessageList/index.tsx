@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
-import io, { Socket } from "socket.io-client";
+import io from "socket.io-client";
 
 import { getMessagesList } from "../../services/messages";
+import { MessageProps } from "../../models/types";
 
 import logoImg from "../../assets/logo.svg";
 import styles from "./styles.module.scss";
-
-type MessageProps = {
-  id: string;
-  text: string;
-  user: {
-    name: string;
-    avatar_url: string;
-  };
-};
 
 const messagesQueue: MessageProps[] = [];
 

@@ -1,20 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { AuthContextProps, UserProps } from "../models/types";
 import { api } from "../services/api";
 import { profileService } from "../services/profileService";
 import { signInService } from "../services/signInService";
-
-type UserProps = {
-  id: string;
-  name: string;
-  login: string;
-  avatar_url: string;
-};
-
-type AuthContextProps = {
-  user: UserProps | null;
-  signInUrl: string;
-  signOut: () => void;
-};
 
 export const AuthContext = createContext({} as AuthContextProps);
 
