@@ -1,5 +1,5 @@
 <div align="center" id="top"> 
-  <img src="./nlw-web/src/assets/readmeweb.png" alt="NLW" />
+  <img src="./src/assets/readmeweb.png" alt="NLW" />
 
 &#xa0;
 
