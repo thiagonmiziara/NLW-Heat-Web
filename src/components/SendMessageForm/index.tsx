@@ -1,12 +1,13 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useState } from "react";
 import { VscGithubInverted, VscSignOut } from "react-icons/vsc";
-import { AuthContext } from "../../context/auth";
+
+import { useAuth } from "../../hooks/useAuth";
 import { postMessage } from "../../services/messages";
 
 import styles from "./styles.module.scss";
 
 export function SendMessageForm() {
-  const { user, signOut } = useContext(AuthContext);
+  const { user, signOut } = useAuth();
   const [message, setMessage] = useState("");
 
   async function handleSendMessage(event: FormEvent) {

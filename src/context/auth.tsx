@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { AuthContextProps, UserProps } from "../models/types";
 import { api } from "../services/api";
 import { profileService } from "../services/profileService";
@@ -12,6 +13,10 @@ type AuthProviderProps = {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps | null>(null);
+  const [valueLocalStorage, setValueLocalStorage] = useLocalStorage(
+    "@dowhile:token",
+    ""
+  );
 
   const signInUrl = `https://github.com/login/oauth/authorize?scope=user&client_id=49a0a0e5503174966923`;
 
@@ -19,7 +24,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const response = await signInService(githubCode);
     const { token, user } = response;
 
-    localStorage.setItem("@dowhile:token", token);
+    // localStorage.setItem("@dowhile:token", token);
+    setValueLocalStorage(token);
 
     api.defaults.headers.common.authorization = `Bearer ${token}`;
 
@@ -33,7 +39,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signOut = () => {
     setUser(null);
-    localStorage.removeItem("@dowhile:token");
+    // localStorage.removeItem("@dowhile:token");
+    setValueLocalStorage("");
   };
 
   useEffect(() => {
@@ -49,7 +56,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("@dowhile:token");
+    // const token = localStorage.getItem("@dowhile:token");
+    const token = valueLocalStorage;
 
     if (token) {
       api.defaults.headers.common.authorization = `Bearer ${token}`;
