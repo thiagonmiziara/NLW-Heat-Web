@@ -50,7 +50,6 @@ export function MessageList() {
         alt='Imagem do evento DoWhile 2021'
         title='Imagem do evento DoWhile 2021'
       />
-
       <ul className={styles.messageList}>
         {messages &&
           messages?.map((message) => {

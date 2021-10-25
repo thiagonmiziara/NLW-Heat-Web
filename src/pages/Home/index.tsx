@@ -15,6 +15,7 @@ export function Home() {
       }`}
     >
       <MessageList />
+
       {!!user ? <SendMessageForm /> : <LoginBox />}
     </main>
   );
